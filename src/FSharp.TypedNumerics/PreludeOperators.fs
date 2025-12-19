@@ -99,6 +99,9 @@ type PreOps =
 // [FS0064] This construct causes code to be less generic than indicated by the type annotations. The type variable 'T has been constrained to be type 'OverloadedOperators'.
 #nowarn "64"
 module PreludeOperators =
+    // NOTE: when changing any xmldoc in here, you must also update the Operators module! The F# compiler doesn't
+    // support <inheritdoc> yet: https://github.com/dotnet/fsharp/issues/19175
+    
     /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int32``1'/>.</summary>
     /// <param name="x">The input value.</param>
     /// <returns>The converted value.</returns>

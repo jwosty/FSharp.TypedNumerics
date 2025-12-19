@@ -1147,16 +1147,57 @@ type Ops =
 // has been constrained to be type 'OverloadedOperators'.
 #nowarn "64"
 module Operators =
+    [<Literal>]
+    let private EXP_MESSAGE = "It be changed or removed in a future version of FSharp.TypedNumerics"
+    
+    // NOTE: when changing any xmldoc in here, you must also update the PreludeOperators module! The F# compiler doesn't
+    // support <inheritdoc> yet: https://github.com/dotnet/fsharp/issues/19175
+    
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int32``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline int32m x = PreludeOperators.int32m x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline intm x = PreludeOperators.intm x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int64``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline int64m x = PreludeOperators.int64m x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.float32``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline float32m x = PreludeOperators.float32m x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.float``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline floatm x = PreludeOperators.floatm x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.decimal``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The converted value.</returns>
     let inline decimalm x = PreludeOperators.decimalm x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.round``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The rounded value.</returns>
     let inline round x = PreludeOperators.round x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.floor``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The floor of the input.</returns>
     let inline floor x = PreludeOperators.floor x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.ceil``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The ceil of the input.</returns>
     let inline ceil x = PreludeOperators.ceil x
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.truncate``1'/>.</summary>
+    /// <param name="x">The input value.</param>
+    /// <returns>The truncated value.</returns>
     let inline truncate x = PreludeOperators.truncate x
+    /// <summary>UoM-preserving version of <see cref='M:System.Math.Clamp'/>.</summary>
+    /// <param name="min">The lower bound of the result.</param>
+    /// <param name="max">The upper bound of the result.</param>
+    /// <param name="x">The value to be clamped.</param>
+    /// <returns>The clamped value.</returns>
     let inline clamp min max x = PreludeOperators.clamp min max x
     /// <summary>
     ///     Linearly interpolates between two values.
@@ -1171,9 +1212,24 @@ module Operators =
     /// <remarks>No clamping is performed on <paramref name="t"/>.</remarks>
     let inline lerp a b t = PreludeOperators.lerp a b t
     
+    /// <summary>Computes the inverse of the linear interpolation between two values, preserving units of measure.</summary>
+    /// <param name="a">The value which was interpolated from.</param>
+    /// <param name="b">The value which was interpolated to.</param>
+    /// <param name="x">An already interpolated value between <paramref name="a"/> and <paramref name="b"/>.</param>
+    /// <returns>How much <paramref name="x"/> is weighted towards <paramref name="a"/> or <paramref name="b"/>. Or,
+    /// the value which, when passed as the weight into <see cref="M:FSharp.TypedNumerics.PreludeOperators.lerp"/>
+    /// along with <paramref name="a"/> and <paramref name="b"/>, would produce <paramref name="x"/>.</returns>
+    /// <example>
+    /// <code lang="fsharp">
+    /// invLerp 0.0 100.0 0.0   // evaluates to 0.0
+    /// invLerp 0.0 100.0 100.0 // evaluates to 1.0
+    /// invLerp 0.0 100.0 50.0  // evaluates to 0.5
+    /// </code>
+    /// </example>
     let inline invLerp a b x = PreludeOperators.invLerp a b x
     
     // -- Vector2 --
+    
     let inline vec2i32 (x: ^a) : Vector2i32<'u> =
         let _lemma: ^M->_ = id<Ops>
         ((^M or ^a) : (static member Vector2i32 : _ -> _) x)
@@ -1235,10 +1291,40 @@ module Operators =
         let _lemma: ^M->_ = id<Ops>
         ((^M or ^a) : (static member PrefixVectorOp : _ -> _) x)
     
+    /// <summary>Overloaded infix generic vector construction operator. Can be chained together to create n-dimensional
+    /// vectors.</summary>
+    /// <param name="a">The first component(s) of the vector.</param>
+    /// <param name="b">The last component(s) of the vector.</param>
+    /// <returns>A vector created from the input value(s).</returns>
+    /// <example>
+    /// <code lang="fsharp">
+    /// let someVec2 = 1.0 @@ 2.0 // equivalent to Vector2f(1.0, 2.0)
+    /// let someVec3 = 1.0f&lt;m&gt; @@ 2.0f&lt;m&gt; @@ 3.0f&lt;m&gt; // equivalent to Vector3f32&lt;m&gt;(1.0f&lt;m&gt;, 2.0f&lt;m&gt;, 3.0f&lt;m&gt;)
+    /// let someVec4 = 10 @@ 1 @@ 20 @@ 2 // equivalent to Vector4i32(10, 1, 20, 2)
+    /// </code>
+    /// </example>
+    [<Experimental(EXP_MESSAGE)>]
     let inline (@@) (a: ^a) (b: ^b) : ^Vector =
         let _lemma: ^M->_ = id<Ops>
         ((^M or ^a) : (static member InfixVectorOp : _ * _ -> _) (a, b))
     
+    /// <summary>Overloaded generic vector construction operator. The appropriate constructor is chosen statically based
+    /// on the input shape and types.</summary>
+    /// <param name="x">The input value(s) representing the elements of a vector.</param>
+    /// <returns>A vector created from the input value(s).</returns>
+    /// <example>
+    /// <code lang="fsharp">
+    /// // Constructing a unitless 2-dimensional float vector:
+    /// let someVec2 = %(1.0, 2.0) = Vector2f(1.0, 2.0)
+    /// // Constructing a 3-dimensional int vector of meters:
+    /// let someVec3 = %(1.0f&lt;m&gt;, 2.0f&lt;m&gt;, 3.0f&lt;m&gt;) = Vector3f32&lt;m&gt;(1.0f&lt;m&gt;, 2.0f&lt;m&gt;, 3.0f&lt;m&gt;
+    /// // Constructing a unitless 4-dimensional int vector:
+    /// let someVec4 = %(10, 1, 20, 2) = Vector4i32(10, 1, 20, 2)
+    /// // Widening a 2-dimensional into a 4-dimensional one by providing the additional components:
+    /// let anotherVec4 %(someVec2, 20, 2) = Vector4i32(10, 1, 20, 2)
+    /// </code>
+    /// </example>
+    [<Experimental(EXP_MESSAGE)>]
     let inline (~%) (x: ^a) : ^Vector = vec x
 
 [<Sealed; AbstractClass>]
