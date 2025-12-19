@@ -466,10 +466,7 @@ type EasingOps =
         let _lemma: ^M->_ = id<EasingOps>
         let tLin = ((^M or ^t) : (static member EaseInOutBounce : ^t -> ^t) t)
         lerp a b tLin
-    
 
-// [FS0064] This construct causes code to be less generic than indicated by the type annotations. The type variable 'T has been constrained to be type 'OverloadedOperators'.
-#nowarn "64"
 module Easing =
     /// <summary>
     ///     Computes exponential damping between two values. This function can be used for framerate independent

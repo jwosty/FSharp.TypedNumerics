@@ -13,5 +13,6 @@
     <Compile Include="Vector.fs" />
     <Compile Include="Easing.fs" />
     <None Include="SwizzleCodegen.fsx" />
+    <None Include="Script.fsx" />
   </ItemGroup>
 </Project>
