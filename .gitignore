@@ -3,6 +3,10 @@ bin/
 obj/
 /packages/
 publish/
+.fsdocs/
+output/
+tmp/
+temp/
 
 #Visual Studio files
 *.pidb

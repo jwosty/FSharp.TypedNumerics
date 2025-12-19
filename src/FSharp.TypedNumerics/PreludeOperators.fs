@@ -98,49 +98,74 @@ type PreOps =
 // [FS0064] This construct causes code to be less generic than indicated by the type annotations. The type variable 'T has been constrained to be type 'OverloadedOperators'.
 #nowarn "64"
 module PreludeOperators =
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int32``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline int32m (x: ^a) : int32<'u> =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member Int32m : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline intm x : int<'u> = int32m x
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.int64``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline int64m (x: ^a) : int64<'u> =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member Int64m : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.float32``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline float32m (x: ^a) : float32<'u> =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member Float32m : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.float``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline floatm (x: ^a) : float<'u> =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member Floatm : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.decimal``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline decimalm (x: ^a) : decimal<'u> =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member Decimalm : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.round``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline round (x: ^a) : ^a =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member RoundOp : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.floor``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline floor (x: ^a) : ^a =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member FloorOp : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.ceil``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline ceil (x: ^a) : ^a=
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member CeilOp : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:Microsoft.FSharp.Core.Operators.truncate``1'/>.</summary>
+    /// <param name="x">The input value.</param>
     let inline truncate (x: ^a) : ^a =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member TruncateOp : _ -> _) x)
     
+    /// <summary>UoM-preserving version of <see cref='M:System.Math.Clamp'/>.</summary>
+    /// <param name="min">The lower bound of the result.</param>
+    /// <param name="max">The upper bound of the result.</param>
+    /// <param name="x">The value to be clamped.</param>
     let inline clamp (min: ^a) (max: ^a) (x: ^a) : ^a =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member ClampOp : _ * _ * _ -> _) (x, min, max))
     
     // FSharp.Core has `exp` but not all of these exponential functions
+    
     /// <summary>Computes <c>exp(x)-1.0</c>.</summary>
     /// <param name="x">The power to which <c>E</c> is raised.</param>
     let inline expm1 (x: ^a) : ^a = (^a : (static member ExpM1 : ^a -> ^a) x)

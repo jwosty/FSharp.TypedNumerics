@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/docs/">
+    <File Path="docs/Index.md" />
+  </Folder>
   <Project Path="src/FSharp.TypedNumerics/FSharp.TypedNumerics.fsproj" />
 </Solution>
