@@ -1,0 +1,36 @@
+#Build system artifacts
+bin/
+obj/
+/packages/
+publish/
+
+#Visual Studio files
+*.pidb
+*.userprefs
+*.[Oo]bj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*.vssscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.[Cc]ache
+*.ilk
+.vs
+
+#IntelliJ/Rider files
+riderModule.iml
+/_ReSharper.Caches/
+.idea/
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
