@@ -472,7 +472,7 @@ module Easing =
     ///     Computes exponential damping between two values. This function can be used for framerate independent
     ///     purposes.
     /// </summary>
-    /// <param name="smoothRate"></param>
+    /// <param name="smoothRate">The proportion of `a` remaining after one time unit.</param>
     /// <param name="a">The first value to blend from.</param>
     /// <param name="b">The second value to blend to.</param>
     /// <param name="Δt">
