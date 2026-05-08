@@ -28,30 +28,35 @@ type PreOps =
     static member inline Int32m (value: float32<'u>) : int32<'u> = Int32WithMeasure (int32 value)
     static member inline Int32m (value: float<'u>) : int32<'u> = Int32WithMeasure (int32 value)
     static member inline Int32m (value: decimal<'u>) : int32<'u> = Int32WithMeasure (int32 (decimal value))
+    static member inline Int32m (value: byte<'u>) : int32<'u> = Int32WithMeasure (int32 (byte value))
     
     static member inline Int64m (value: int32<'u>) : int64<'u> = Int64WithMeasure (int64 value)
     static member inline Int64m (value: int64<'u>) : int64<'u> = value
     static member inline Int64m (value: float32<'u>) : int64<'u> = Int64WithMeasure (int64 value)
     static member inline Int64m (value: float<'u>) : int64<'u> = Int64WithMeasure (int64 value)
     static member inline Int64m (value: decimal<'u>) : int64<'u> = Int64WithMeasure (int64 (decimal value))
+    static member inline Int64m (value: byte<'u>) : int64<'u> = Int64WithMeasure (int64 (byte value))
     
     static member inline Float32m (value: int32<'u>) : float32<'u> = Float32WithMeasure (float32 value)
     static member inline Float32m (value: int64<'u>) : float32<'u> = Float32WithMeasure (float32 value)
     static member inline Float32m (value: float32<'u>) : float32<'u> = value
     static member inline Float32m (value: float<'u>) : float32<'u> = Float32WithMeasure (float32 value)
     static member inline Float32m (value: decimal<'u>) : float32<'u> = Float32WithMeasure (float32 (decimal value))
+    static member inline Float32m (value: byte<'u>) : float32<'u> = Float32WithMeasure (float32 (byte value))
     
     static member inline Floatm (value: int32<'u>) : float<'u> = FloatWithMeasure (float value)
     static member inline Floatm (value: int64<'u>) : float<'u> = FloatWithMeasure (float value)
     static member inline Floatm (value: float32<'u>) : float<'u> = FloatWithMeasure (float value)
     static member inline Floatm (value: float<'u>) : float<'u> = value
     static member inline Floatm (value: decimal<'u>) : float<'u> = FloatWithMeasure (float (decimal value))
+    static member inline Floatm (value: byte<'u>) : float<'u> = FloatWithMeasure (float (byte value))
     
     static member inline Decimalm (value: int32<'u>) : decimal<'u> = DecimalWithMeasure (decimal value)
     static member inline Decimalm (value: int64<'u>) : decimal<'u> = DecimalWithMeasure (decimal value)
     static member inline Decimalm (value: float32<'u>) : decimal<'u> = DecimalWithMeasure (decimal value)
     static member inline Decimalm (value: float<'u>) : decimal<'u> = DecimalWithMeasure (decimal value)
     static member inline Decimalm (value: decimal<'u>) : decimal<'u> = value
+    static member inline Decimalm (value: byte<'u>) : decimal<'u> = DecimalWithMeasure (decimal (byte value))
     
     static member inline RoundOp (n: float<'u>) : float<'u> = n |> float |> round |> FloatWithMeasure
     static member inline RoundOp (n: float32<'u>) : float32<'u> = n |> float32 |> round |> Float32WithMeasure
@@ -77,6 +82,8 @@ type PreOps =
         Math.Clamp (float32 n, float32 min, float32 max) |> Float32WithMeasure
     static member inline ClampOp (n: decimal<'u>, min: decimal<'u>, max: decimal<'u>) : decimal<'u> =
         Math.Clamp (decimal n, decimal min, decimal max) |> DecimalWithMeasure
+    static member inline ClampOp (n: byte<'u>, min: byte<'u>, max: byte<'u>) : byte<'u> =
+        Math.Clamp (byte n, byte min, byte max) |> ByteWithMeasure
     
     static member LerpOp (a: float<'u>, b: float<'u>, t: float) = a + (b - a) * t
     // static member LerpOp (a: float<'u>, b: float<'u>, t: float32) = a + (b - a) * (float t)
