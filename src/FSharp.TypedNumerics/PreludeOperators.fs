@@ -92,7 +92,7 @@ type PreOps =
     static member InvLerpOp (a: float<'u>, b: float<'u>, x: float<'u>) = (x - a) / (b - a)
     
     static member InvLerpOp (a: float32<'u>, b: float32<'u>, x: float32<'u>) = (x - a) / (b - a)
-    
+        
     // static member (%) (x: float<'u>, y: float<'u>) : float<'u> = x % y
     
     static member RadiansToDegrees (r: float<rad>) : float<deg> = r * degPerRad
@@ -267,6 +267,23 @@ module PreludeOperators =
     let inline invLerp (a: ^a) (b: ^a) (x: ^a) : ^x =
         let _lemma: ^M->_ = id<PreOps>
         ((^M or ^a) : (static member InvLerpOp : _ -> _ -> _ -> _) (a, b, x))
+    
+    /// <summary>Converts a value from one linear range to another, preserving units of measure.</summary>
+    /// <param name="inA">The lower bound of the input range.</param>
+    /// <param name="inB">The upper bound of the input range.</param>
+    /// <param name="outA">The lower bound of the output range.</param>
+    /// <param name="outB">The upper bound of the output range.</param>
+    /// <param name="x">The input value to convert.</param>
+    /// <returns>The value of <paramref name="x"/> mapped from the input range to the output range.</returns>
+    /// <example>
+    /// <code lang="fsharp">
+    /// remap 0.0 100.0 32.0 212.0 0.0   // evaluates to 32.0
+    /// remap 0.0 100.0 32.0 212.0 100.0 // evaluates to 212.0
+    /// remap 0.0 100.0 32.0 212.0 50.0  // evaluates to 122.0
+    /// </code>
+    /// </example>
+    let inline remap (inA: ^a) (inB: ^a) (outA: ^b) (outB: ^b) (x: ^a) : ^b =
+        x |> invLerp inA inB |> lerp outA outB
     
     /// <summary>Converts a value from radians to degrees.</summary>
     /// <param name="radians">A value, in <see cref="T:FSharp.TypedNumerics.Units.rad"/>, to convert.</param>

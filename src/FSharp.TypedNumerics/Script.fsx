@@ -4,13 +4,22 @@
 #load "Vector.fs"
 #load "Easing.fs"
 
-// open System
-// open FSharp.Data.UnitSystems.SI.UnitSymbols
-// open FSharp.TypedNumerics
-// open FSharp.TypedNumerics.Units
-// open FSharp.TypedNumerics.PreludeOperators
-// open FSharp.TypedNumerics.Operators
-//
+open System
+open FSharp.Data.UnitSystems.SI.UnitSymbols
+open FSharp.TypedNumerics
+open FSharp.TypedNumerics.Units
+open FSharp.TypedNumerics.PreludeOperators
+open FSharp.TypedNumerics.Operators
+
+type [<Measure>] m
+type [<Measure>] s
+
+remap 10.0<m> 20.0<m> 100.0<s> 200.0<s> 12.0<m>
+
+remap 0.0 100.0 32.0 212.0 0.0   // evaluates to 32.0
+remap 0.0 100.0 32.0 212.0 100.0 // evaluates to 212.0
+remap 0.0 100.0 32.0 212.0 50.0  // evaluates to 122.0
+
 // radToDeg Math.PI
 // radToDeg Math.Tau
 //

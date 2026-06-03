@@ -1228,6 +1228,22 @@ module Operators =
     /// </example>
     let inline invLerp a b x = PreludeOperators.invLerp a b x
     
+    /// <summary>Converts a value from one linear range to another, preserving units of measure.</summary>
+    /// <param name="inA">The lower bound of the input range.</param>
+    /// <param name="inB">The upper bound of the input range.</param>
+    /// <param name="outA">The lower bound of the output range.</param>
+    /// <param name="outB">The upper bound of the output range.</param>
+    /// <param name="x">The input value to convert.</param>
+    /// <returns>The value of <paramref name="x"/> mapped from the input range to the output range.</returns>
+    /// <example>
+    /// <code lang="fsharp">
+    /// remap 0.0 100.0 32.0 212.0 0.0   // evaluates to 32.0
+    /// remap 0.0 100.0 32.0 212.0 100.0 // evaluates to 212.0
+    /// remap 0.0 100.0 32.0 212.0 50.0  // evaluates to 122.0
+    /// </code>
+    /// </example>
+    let inline remap inA inB outA outB x = PreludeOperators.remap inA inB outA outB x
+    
     // -- Vector2 --
     
     let inline vec2i32 (x: ^a) : Vector2i32<'u> =
