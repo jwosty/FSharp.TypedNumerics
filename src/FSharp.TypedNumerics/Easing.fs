@@ -329,6 +329,55 @@ type EasingOps =
         let tLin : ^b = ((^M or ^b or ^t) : (static member EaseBezier3 : ^b * ^b * ^t -> ^b) (controlB, controlC, t))
         lerp a b tLin
     
+    /// <summary>
+    /// 1-dimensional septic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/2o2v8ciimz</plot>
+    static member EaseBezier7 (controlB: float32, controlC: float32, controlD: float32, controlE: float32, controlF: float32, controlG: float32, t: float32) : float32 =
+        let s = 1.f - t
+        let t2 = t*t
+        let s2 = s*s
+        let t3 = t2*t
+        let s3 = s2*s
+        let t4 = t2*t2
+        let s4 = s2*s2
+        let t5 = t3*t2
+        let s5 = s3*s2
+        let t6 = t3*t3
+        let s6 = s3*s3
+        let t7 = t3*t2*t2
+        (7.f*controlB*s6*t) + (21.f*controlC*s5*t2) + (35.f*controlD*s4*t3) +
+            (35.f*controlE*s3*t4) + (21.f*controlF*s2*t5) + (7.f*controlG*s*t6) + t7
+    
+    /// <summary>
+    /// 1-dimensional septic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/2o2v8ciimz</plot>
+    static member EaseBezier7 (controlB: float, controlC: float, controlD: float, controlE: float, controlF: float, controlG: float, t: float) : float =
+        let s = 1. - t
+        let t2 = t*t
+        let s2 = s*s
+        let t3 = t2*t
+        let s3 = s2*s
+        let t4 = t2*t2
+        let s4 = s2*s2
+        let t5 = t3*t2
+        let s5 = s3*s2
+        let t6 = t3*t3
+        let s6 = s3*s3
+        let t7 = t3*t2*t2
+        (7.*controlB*s6*t) + (21.*controlC*s5*t2) + (35.*controlD*s4*t3) +
+            (35.*controlE*s3*t4) + (21.*controlF*s2*t5) + (7.*controlG*s*t6) + t7
+    
+    /// <summary>
+    /// 1-dimensional septic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/2o2v8ciimz</plot>
+    static member inline EaseBezier7 (a: ^a, b: ^a, controlB: ^b, controlC: ^b, controlD: ^b, controlE: ^b, controlF: ^b, controlG: ^b, t: ^t) : ^a =
+        let _lemma: ^M->_ = id<EasingOps>
+        let tLin : ^b = ((^M or ^b or ^t) : (static member EaseBezier7 : ^b * ^b * ^b * ^b * ^b * ^b * ^t -> ^b) (controlB, controlC, controlD, controlE, controlF, controlG, t))
+        lerp a b tLin
+
     /// <summary></summary>
     /// <plot>https://codepen.io/jwosty/pen/KwwwXbK</plot>
     static member EaseInBack (t: float) : float = c3f * t * t * t - c1f * t * t
@@ -642,6 +691,14 @@ module Easing =
         let _lemma: ^M->_ = id<EasingOps>
         ((^M or ^a) : (static member EaseBezier3 : ^a * ^a * ^b * ^b * ^t -> ^c) (a, b, controlB, controlC, t))
     
+    /// <summary>
+    /// 1-dimensional septic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/2o2v8ciimz</plot>
+    let inline easeBezier7 (a: ^a) (b: ^a) (controlB: ^b) (controlC: ^b) (controlD: ^b) (controlE: ^b) (controlF: ^b) (controlG: ^b) (t: ^t) =
+        let _lemma: ^M->_ = id<EasingOps>
+        ((^M or ^a) : (static member EaseBezier7 : ^a * ^a * ^b * ^b * ^b * ^b * ^b * ^b * ^t -> ^c) (a, b, controlB, controlC, controlD, controlE, controlF, controlG, t))
+
     /// <summary></summary>
     /// <plot>https://codepen.io/jwosty/pen/KwwwXbK</plot>
     let inline easeInBack (a: ^a) (b: ^a) (t: ^b) =
