@@ -330,6 +330,45 @@ type EasingOps =
         lerp a b tLin
     
     /// <summary>
+    /// 1-dimensional quintic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/qqljgjg8og</plot>
+    static member EaseBezier5 (controlB: float32, controlC: float32, controlD: float32, controlE: float32, t: float32) : float32 =
+        let s = 1.f - t
+        let t2 = t*t
+        let s2 = s*s
+        let t3 = t2*t
+        let s3 = s2*s
+        let t4 = t2*t2
+        let s4 = s2*s2
+        let t5 = t2*t3
+        (5.f*controlB*s4*t) + (10.f*controlC*s3*t2) + (10.f*controlD*s2*t3) + (5.f*controlE*s*t4) + t5
+
+    /// <summary>
+    /// 1-dimensional quintic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/qqljgjg8og</plot>
+    static member EaseBezier5 (controlB: float, controlC: float, controlD: float, controlE: float, t: float) : float =
+        let s = 1. - t
+        let t2 = t*t
+        let s2 = s*s
+        let t3 = t2*t
+        let s3 = s2*s
+        let t4 = t2*t2
+        let s4 = s2*s2
+        let t5 = t2*t3
+        (5.*controlB*s4*t) + (10.*controlC*s3*t2) + (10.*controlD*s2*t3) + (5.*controlE*s*t4) + t5
+
+    /// <summary>
+    /// 1-dimensional quintic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/qqljgjg8og</plot>
+    static member inline EaseBezier5 (a: ^a, b: ^a, controlB: ^b, controlC: ^b, controlD: ^b, controlE: ^b, t: ^t) : ^a =
+        let _lemma: ^M->_ = id<EasingOps>
+        let tLin : ^b = ((^M or ^b or ^t) : (static member EaseBezier5 : ^b * ^b * ^b * ^b * ^t -> ^b) (controlB, controlC, controlD, controlE, t))
+        lerp a b tLin
+
+    /// <summary>
     /// 1-dimensional septic Bezier curve.
     /// </summary>
     /// <plot>https://www.desmos.com/calculator/2o2v8ciimz</plot>
@@ -691,6 +730,14 @@ module Easing =
         let _lemma: ^M->_ = id<EasingOps>
         ((^M or ^a) : (static member EaseBezier3 : ^a * ^a * ^b * ^b * ^t -> ^c) (a, b, controlB, controlC, t))
     
+    /// <summary>
+    /// 1-dimensional quintic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/qqljgjg8og</plot>
+    let inline easeBezier5 (a: ^a) (b: ^a) (controlB: ^b) (controlC: ^b) (controlD: ^b) (controlE: ^b) (t: ^t) =
+        let _lemma: ^M->_ = id<EasingOps>
+        ((^M or ^a) : (static member EaseBezier5 : ^a * ^a * ^b * ^b * ^b * ^b * ^t -> ^c) (a, b, controlB, controlC, controlD, controlE, t))
+
     /// <summary>
     /// 1-dimensional septic Bezier curve.
     /// </summary>
