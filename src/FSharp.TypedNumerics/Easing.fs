@@ -292,6 +292,42 @@ type EasingOps =
         let tLin = ((^M or ^t) : (static member EaseInOutCirc : ^t -> ^t) t)
         lerp a b tLin
     
+    /// <summary>
+    /// 1-dimensional cubic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/0jry1kvb5r</plot>
+    static member EaseBezier3 (controlB: float32, controlC: float32, t: float32) : float32 =
+        // see:
+        // https://blog.demofox.org/2014/08/28/one-dimensional-bezier-curves/
+        // https://youtu.be/mr5xkf6zSzk?t=1569
+        let s = 1.f - t
+        let t2 = t * t
+        let s2 = s * s
+        let t3 = t2 * t
+        (3.f*controlB*s2*t) + (3.f*controlC*s*t2) + t3
+    
+    /// <summary>
+    /// 1-dimensional cubic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/0jry1kvb5r</plot>
+    static member EaseBezier3 (controlB: float, controlC: float, t: float) : float =
+        // see:
+        // https://blog.demofox.org/2014/08/28/one-dimensional-bezier-curves/
+        // https://youtu.be/mr5xkf6zSzk?t=1569
+        let s = 1. - t
+        let t2 = t * t
+        let s2 = s * s
+        let t3 = t2 * t
+        (3.*controlB*s2*t) + (3.*controlC*s*t2) + t3
+    
+    /// <summary>
+    /// 1-dimensional cubic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/0jry1kvb5r</plot>
+    static member inline EaseBezier3 (a: ^a, b: ^a, controlB: ^b, controlC: ^b, t: ^t) : ^a =
+        let _lemma: ^M->_ = id<EasingOps>
+        let tLin : ^b = ((^M or ^b or ^t) : (static member EaseBezier3 : ^b * ^b * ^t -> ^b) (controlB, controlC, t))
+        lerp a b tLin
     
     /// <summary></summary>
     /// <plot>https://codepen.io/jwosty/pen/KwwwXbK</plot>
@@ -595,6 +631,16 @@ module Easing =
     let inline easeInOutCirc (a: ^a) (b: ^a) (t: ^b) =
         let _lemma: ^M->_ = id<EasingOps>
         ((^M or ^a) : (static member EaseInOutCirc : ^a * ^a * ^b -> ^c) (a, b, t))
+    
+    
+    /// <summary>
+    /// 1-dimensional cubic Bezier curve.
+    /// </summary>
+    /// <plot>https://www.desmos.com/calculator/0jry1kvb5r</plot>
+    let inline easeBezier3 (a: ^a) (b: ^a) (controlB: ^b) (controlC: ^b) (t: ^t) =
+        // fun fact: `easeBezier3 a b 0.0 1.0 t` is smoothstep
+        let _lemma: ^M->_ = id<EasingOps>
+        ((^M or ^a) : (static member EaseBezier3 : ^a * ^a * ^b * ^b * ^t -> ^c) (a, b, controlB, controlC, t))
     
     /// <summary></summary>
     /// <plot>https://codepen.io/jwosty/pen/KwwwXbK</plot>
