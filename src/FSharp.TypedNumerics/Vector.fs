@@ -1390,6 +1390,8 @@ module Vector =
     let inline cross (v1: ^v1) (v2: ^v2) =
         ((^v1 or ^v2) : (static member Cross : ^v1 * ^v2 -> ^v3) (v1, v2))
 
+#warnon "64"
+
 // The rest of this file is generated code. See SwizzleCodegen.fsx.
 
 module Swizzling =
